@@ -4,8 +4,107 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <title>Weather Dashboard</title>
   </head>
 
-  <body></body>
+  <body>
+    <header>
+      <h1 class="text-center">Weather Dashboard</h1>
+    </header>
+    <main class="d-flex row container col-12 m-2 mt-5 fill">
+      <section class="col-3 container">
+        <form id="search-bar" class="m-2">
+          <h2 class="m-2">Search For a City:</h2>
+          <input
+            type="text"
+            name="citySearch"
+            class="form-control m-2"
+            placeholder="Atlanta"
+          />
+          <button type="button" class="btn btn-primary col-12 m-2">
+            Search Button
+          </button>
+        </form>
+        <section
+          id="search-history"
+          class="m-2 col-11 border-top border-dark border-5"
+        >
+          <section class="m-2">
+            <button
+              type="button"
+              class="btn btn-secondary row col-12 m-2 text-center my-3"
+            >
+              City
+            </button>
+          </section>
+        </section>
+      </section>
+
+      <section class="col-9">
+        <section id="current-city" class="col container m-2">
+          <h2 class="">Current City (MM/DD/YYYY) Icon</h2>
+          <article>
+            <p>Temp</p>
+            <p>Wind</p>
+            <p>Humidity</p>
+            <p>UV Index</p>
+          </article>
+        </section>
+
+        <section id="forecast" class="col container m-2">
+          <h3 class="col">5-Day Forecast:</h3>
+          <section class="row col-12">
+            <article class="col-2 bg-primary m-2">
+              <h4>Day 1</h4>
+              <aside>Icon</aside>
+              <p>Temp</p>
+              <p>Wind</p>
+              <p>Humidity</p>
+            </article>
+            <article class="col-2 bg-primary m-2">
+              <h4>Day 2</h4>
+              <aside>Icon</aside>
+              <p>Temp</p>
+              <p>Wind</p>
+              <p>Humidity</p>
+            </article>
+            <article class="col-2 bg-primary m-2">
+              <h4>Day 3</h4>
+              <aside>Icon</aside>
+              <p>Temp</p>
+              <p>Wind</p>
+              <p>Humidity</p>
+            </article>
+            <article class="col-2 bg-primary m-2">
+              <h4>Day 4</h4>
+              <aside>Icon</aside>
+              <p>Temp</p>
+              <p>Wind</p>
+              <p>Humidity</p>
+            </article>
+            <article class="col-2 bg-primary m-2">
+              <h4>Day 5</h4>
+              <aside>Icon</aside>
+              <p>Temp</p>
+              <p>Wind</p>
+              <p>Humidity</p>
+            </article>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/open-weather/2.0.0/openweather.min.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
