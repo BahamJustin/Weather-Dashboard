@@ -25,38 +25,33 @@
         <form id="search-bar" class="m-2">
           <h2 class="m-2">Search For a City:</h2>
           <input
+            id="cityInput"
             type="text"
             name="citySearch"
             class="form-control m-2"
             placeholder="Atlanta"
           />
-          <button type="button" class="btn btn-primary col-12 m-2">
+          <button id="submit" type="button" class="btn btn-primary col-12 m-2">
             Search Button
           </button>
         </form>
         <section
-          id="search-history"
+          id="history-list"
           class="m-2 col-11 border-top border-dark border-5"
-        >
-          <section class="m-2">
-            <button
-              type="button"
-              class="btn btn-secondary row col-12 m-2 text-center my-3"
-            >
-              City
-            </button>
-          </section>
-        </section>
+        ></section>
       </section>
 
       <section class="col-9">
-        <section id="current-city" class="col container m-2">
-          <h2 class="">Current City (MM/DD/YYYY) Icon</h2>
+        <section class="col container m-2">
+          <h2 class="">
+            <span id="current-city"></span>
+            <span id="current-date"></span> Icon
+          </h2>
           <article>
-            <p>Temp</p>
-            <p>Wind</p>
-            <p>Humidity</p>
-            <p>UV Index</p>
+            <p>Temp: <span id="city-temp"></span></p>
+            <p>Wind: <span id="city-wind"></span></p>
+            <p>Humidity: <span id="city-humid"></span></p>
+            <p>UV Index: <span id="city-uv"></span></p>
           </article>
         </section>
 
@@ -104,7 +99,7 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/open-weather/2.0.0/openweather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>
