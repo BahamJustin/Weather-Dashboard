@@ -2,21 +2,74 @@
 var cityInput = document.querySelector("#cityInput");
 var apiKey = "&appid=0cab3455fdc5081541be5d657005bb3b";
 
+// Current Date is displayed - change to current cities date if time zone doesnt match
+$("#current-date").text(moment().format("(MM/DD/YYYY)"));
+
 // Location based current city
 
 // Get Today's Weather Data
-var todayInfo = function (city) {
-  var currentDataURL =
+var cityCurrent = function (cityLat, cityLon) {
+  var currentWeatherURL =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    cityLat +
+    "&lon=" +
+    cityLon +
+    "&exclude=minutely&exclude=hourly&exclude=alerts" +
+    "&units=imperial" +
+    apiKey;
+  fetch(currentWeatherURL)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log(data.current);
+          displayToday(data);
+        });
+      } else {
+        alert("Error:" + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect");
+    });
+};
+
+// Get 5 Day Forecast
+var fiveDay = function (cityLat, cityLon) {
+  var forecastDataURL =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    cityLat +
+    "&lon=" +
+    cityLon +
+    "&exclude=minutely&exclude=hourly&exclude=alerts" +
+    "&units=imperial" +
+    apiKey;
+  fetch(forecastDataURL).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data.daily);
+        displayForecast(data.daily);
+      });
+    } else {
+      alert("Error:" + response.statusText);
+    }
+  });
+};
+
+// Get City Lat/Long
+var callCity = function (city) {
+  var callCityURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     apiKey +
     "&units=imperial";
-  fetch(currentDataURL)
+  fetch(callCityURL)
     .then(function (response) {
       if (response.ok) {
-        console.log(response);
         response.json().then(function (data) {
-          displayToday(data);
+          var cityLat = data.coord.lat;
+          var cityLon = data.coord.lon;
+          cityCurrent(cityLat, cityLon);
+          fiveDay(cityLat, cityLon);
         });
       } else {
         alert("Error:" + response.statusText);
@@ -29,34 +82,35 @@ var todayInfo = function (city) {
 
 // Display Today's Info
 var displayToday = function (data) {
-  $("#city-temp").text(data.main.temp);
-  $("#city-wind").text(data.wind.speed);
-  $("#city-humid").text(data.main.humidity);
-};
-
-// Get 5 Day Forecast
-var fiveDayInfo = function (city) {
-  var forecastDataURL =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
-    city +
-    "&appid=0cab3455fdc5081541be5d657005bb3b";
-  fetch(forecastDataURL).then(function (response) {
-    if (response.ok) {
-      console.log(response);
-      response.json().then(function (data) {
-        console.log(data);
-      });
-    } else {
-      alert("Error:" + response.statusText);
-    }
-  });
+  $("#city-temp").text(data.current.temp + " °F");
+  $("#city-wind").text(data.current.wind_speed + " MPH");
+  $("#city-humid").text(data.current.humidity + "%");
+  var iconcode = data.current.weather[0].icon;
+  var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+  $("#wicon").attr("src", iconurl);
+  $("#city-uv").text(data.current.uvi);
 };
 
 // Display Forecast Info
-var displayForecast = function () {};
+var displayForecast = function (data) {
+  for (var i = 0; i < 5; i++) {
+    // Daily Date
+    // Daily Icon
+    // Daily Temp
+    $("#dayOneTemp").text(data[0].temp.min + "/" + data[0].temp.max);
+    $("#dayTwoTemp").text(data[1].temp.min + "/" + data[1].temp.max);
+    $("#dayThreeTemp").text(data[2].temp.min + "/" + data[2].temp.max);
+    $("#dayFourTemp").text(data[3].temp.min + "/" + data[3].temp.max);
+    $("#dayFiveTemp").text(data[4].temp.min + "/" + data[4].temp.max);
+    // Daily Wind Speed
+    // Daily Humidity
+    var maxTemp = data[i].temp.max;
+    var windSpeed = data[i].wind_speed;
+    var humidity = data[i].humidity;
 
-// Current Date is displayed - change to current cities date if time zone doesnt match
-$("#current-date").text(moment().format("(MM/DD/YYYY)"));
+    console.log(maxTemp, windSpeed, humidity);
+  }
+};
 
 // Submit a City to view information
 $("#submit").on("click", function (event) {
@@ -75,9 +129,9 @@ $("#submit").on("click", function (event) {
 
   // check for valid city
   if (submittedCity) {
-    todayInfo(submittedCity);
-    fiveDayInfo(submittedCity);
-    historyLi.append(historyBtn);
+    callCity(submittedCity);
+    // fiveDayInfo(submittedCity);
+    // historyLi.append(historyBtn);
   } else {
     alert("Please enter a valid city");
   }
@@ -91,8 +145,8 @@ $("#history-list").on("click", "button", function () {
   var submittedCity = $(this).text();
   console.log(submittedCity);
   $("#current-city").text(submittedCity);
-  todayInfo(submittedCity);
-  fiveDayInfo(submittedCity);
+  // todayInfo(submittedCity);
+  // fiveDayInfo(submittedCity);
 });
 
 /* <button
