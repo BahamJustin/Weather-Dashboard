@@ -1,9 +1,10 @@
-// Use git-it-done for reference
 var cityInput = document.querySelector("#cityInput");
 var apiKey = "&appid=0cab3455fdc5081541be5d657005bb3b";
+var listLimit = 0;
+var alreadyAdded = [];
 
 // Current Date is displayed - change to current cities date if time zone doesnt match
-$("#current-date").text(moment().format("(MM/DD/YYYY)"));
+$("#current-date").text(moment().format("MM/DD/YYYY"));
 
 // Location based current city
 
@@ -71,7 +72,7 @@ var callCity = function (city) {
           cityCurrent(cityLat, cityLon);
           fiveDay(cityLat, cityLon);
         });
-      } else {
+      } else if (!response.ok) {
         alert("Error:" + response.statusText);
       }
     })
@@ -95,20 +96,59 @@ var displayToday = function (data) {
 var displayForecast = function (data) {
   for (var i = 0; i < 5; i++) {
     // Daily Date
+    $("#dayOneDate").text(moment().add(1, "days").format("MM/DD/YYYY"));
+    $("#dayTwoDate").text(moment().add(2, "days").format("MM/DD/YYYY"));
+    $("#dayThreeDate").text(moment().add(3, "days").format("MM/DD/YYYY"));
+    $("#dayFourDate").text(moment().add(4, "days").format("MM/DD/YYYY"));
+    $("#dayFiveDate").text(moment().add(5, "days").format("MM/DD/YYYY"));
+
     // Daily Icon
+    $("#dayOneIcon").attr(
+      "src",
+      "http://openweathermap.org/img/w/" + data[0].weather[0].icon + ".png"
+    );
+    $("#dayTwoIcon").attr(
+      "src",
+      "http://openweathermap.org/img/w/" + data[1].weather[0].icon + ".png"
+    );
+    $("#dayThreeIcon").attr(
+      "src",
+      "http://openweathermap.org/img/w/" + data[2].weather[0].icon + ".png"
+    );
+    $("#dayFourIcon").attr(
+      "src",
+      "http://openweathermap.org/img/w/" + data[3].weather[0].icon + ".png"
+    );
+    $("#dayFiveIcon").attr(
+      "src",
+      "http://openweathermap.org/img/w/" + data[4].weather[0].icon + ".png"
+    );
+
     // Daily Temp
     $("#dayOneTemp").text(data[0].temp.min + "/" + data[0].temp.max);
     $("#dayTwoTemp").text(data[1].temp.min + "/" + data[1].temp.max);
     $("#dayThreeTemp").text(data[2].temp.min + "/" + data[2].temp.max);
     $("#dayFourTemp").text(data[3].temp.min + "/" + data[3].temp.max);
     $("#dayFiveTemp").text(data[4].temp.min + "/" + data[4].temp.max);
+
     // Daily Wind Speed
+    $("#dayOneWind").text(data[0].wind_speed + " MPH");
+    $("#dayTwoWind").text(data[1].wind_speed + " MPH");
+    $("#dayThreeWind").text(data[2].wind_speed + " MPH");
+    $("#dayFourWind").text(data[3].wind_speed + " MPH");
+    $("#dayFiveWind").text(data[4].wind_speed + " MPH");
+
     // Daily Humidity
+    $("#dayOneHumid").text(data[0].humidity + "%");
+    $("#dayTwoHumid").text(data[1].humidity + "%");
+    $("#dayThreeHumid").text(data[2].humidity + "%");
+    $("#dayFourHumid").text(data[3].humidity + "%");
+    $("#dayFiveHumid").text(data[4].humidity + "%");
+
+    var minTemp = data[i].temp.min;
     var maxTemp = data[i].temp.max;
     var windSpeed = data[i].wind_speed;
     var humidity = data[i].humidity;
-
-    console.log(maxTemp, windSpeed, humidity);
   }
 };
 
@@ -130,14 +170,24 @@ $("#submit").on("click", function (event) {
   // check for valid city
   if (submittedCity) {
     callCity(submittedCity);
-    // fiveDayInfo(submittedCity);
-    // historyLi.append(historyBtn);
   } else {
     alert("Please enter a valid city");
   }
 
-  // Limit History List
-  // Prevent duplicates
+  // Limit History List & Prevent Duplicates
+  if (
+    submittedCity &&
+    listLimit <= 5 &&
+    alreadyAdded.includes(submittedCity) === false
+  ) {
+    listLimit++;
+    console.log(listLimit);
+    historyLi.append(historyBtn);
+    alreadyAdded.push(submittedCity);
+  }
+
+  // Clear input
+  cityInput.value = "";
 });
 
 // Clicking city in search history displays the info for that city again
@@ -145,13 +195,5 @@ $("#history-list").on("click", "button", function () {
   var submittedCity = $(this).text();
   console.log(submittedCity);
   $("#current-city").text(submittedCity);
-  // todayInfo(submittedCity);
-  // fiveDayInfo(submittedCity);
+  callCity(submittedCity);
 });
-
-/* <button
-type="button"
-class="btn btn-secondary row col-12 m-2 text-center my-3"
->
-City
-</button> */
