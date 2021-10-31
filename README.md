@@ -1,30 +1,17 @@
 # Weather-Dashboard
 
-Open the page
+![Screenshot](assets/images/screencapture.png)
 
-- ask for location
+## Built With
 
-Display
+- JQuery
+- Bootstrap
+- OpenWeatherAPI
 
-- Header w/ title
-- left hand search bar with cities from search history
-- right hand current city display w/ extra information, 5 day forecast for current city on the bottom
+## Description
 
-Search for city
+Allows you to check the weather of any city for now and for the next 5 days.
 
-- presented with current and future conditions for that city and that city is added to the search history and stored in local storage
-  Current City Display
+## Website Link
 
-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-- UV Index: presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
-5-Day Forecast
-
-- displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity of next 5 days
-
-Hints:
-
-- form inputs
-
-Weather API
-https://openweathermap.org/api/one-call-api
+- https://bahamjustin.github.io/Weather-Dashboard/

@@ -18,7 +18,7 @@
 
   <body>
     <header>
-      <h1 class="text-center">Weather Dashboard</h1>
+      <h1 class="text-center bg-header">Weather Dashboard</h1>
     </header>
     <main class="d-flex row container col-12 m-2 mt-5 fill">
       <section class="col-3 container">
@@ -29,10 +29,10 @@
             type="text"
             name="citySearch"
             class="form-control m-2"
-            placeholder="Atlanta"
+            placeholder="Enter City Here"
           />
           <button id="submit" type="button" class="btn btn-primary col-12 m-2">
-            Search Button
+            Search
           </button>
         </form>
         <section
@@ -42,7 +42,7 @@
       </section>
 
       <section class="col-9">
-        <section class="col container m-2">
+        <section class="border border-2 col container m-2 p-2">
           <h2 class="">
             <span id="current-city"></span>
             <span id="current-date"></span>
@@ -52,42 +52,45 @@
             <p>Temp: <span id="city-temp"></span></p>
             <p>Wind: <span id="city-wind"></span></p>
             <p>Humidity: <span id="city-humid"></span></p>
-            <p>UV Index: <span id="city-uv"></span></p>
+            <p>
+              UV Index:
+              <span id="city-uv" class="px-2 fs-4 text-center rounded"></span>
+            </p>
           </article>
         </section>
 
         <section id="forecast" class="col container m-2">
           <h3 class="col">5-Day Forecast:</h3>
           <section class="row col-12">
-            <article class="col-2 bg-primary m-2">
+            <article class="col-2 bg-forecast m-2">
               <h4><span id="dayOneDate"></span></h4>
               <img id="dayOneIcon" />
               <p>Temp: <span id="dayOneTemp"></span></p>
               <p>Wind: <span id="dayOneWind"></span></p>
               <p>Humidity: <span id="dayOneHumid"></span></p>
             </article>
-            <article class="col-2 bg-primary m-2">
+            <article class="col-2 bg-forecast m-2">
               <h4><span id="dayTwoDate"></span></h4>
               <img id="dayTwoIcon" />
               <p>Temp: <span id="dayTwoTemp"></span></p>
               <p>Wind: <span id="dayTwoWind"></span></p>
               <p>Humidity: <span id="dayTwoHumid"></span></p>
             </article>
-            <article class="col-2 bg-primary m-2">
+            <article class="col-2 bg-forecast m-2">
               <h4><span id="dayThreeDate"></span></h4>
               <img id="dayThreeIcon" />
               <p>Temp: <span id="dayThreeTemp"></span></p>
               <p>Wind: <span id="dayThreeWind"></span></p>
               <p>Humidity: <span id="dayThreeHumid"></span></p>
             </article>
-            <article class="col-2 bg-primary m-2">
+            <article class="col-2 bg-forecast m-2">
               <h4><span id="dayFourDate"></span></h4>
               <img id="dayFourIcon" />
               <p>Temp: <span id="dayFourTemp"></span></p>
               <p>Wind: <span id="dayFourWind"></span></p>
               <p>Humidity: <span id="dayFourHumid"></span></p>
             </article>
-            <article class="col-2 bg-primary m-2">
+            <article class="col-2 bg-forecast m-2">
               <h4><span id="dayFiveDate"></span></h4>
               <img id="dayFiveIcon" />
               <p>Temp: <span id="dayFiveTemp"></span></p>

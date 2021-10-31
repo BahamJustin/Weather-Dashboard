@@ -2,3 +2,50 @@
   min-height: 100%;
   height: 100%;
 }
+
+.bg-header {
+  padding: 10px;
+  color: white;
+  background: rgb(0, 212, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 1) 0%,
+    rgba(9, 9, 121, 1) 57%,
+    rgba(2, 0, 36, 1) 100%
+  );
+}
+
+.btn-history {
+  color: black;
+  background-color: lightgrey;
+}
+
+.bg-forecast {
+  color: white;
+  background-color: #33475a;
+}
+
+.bg-low {
+  color: white;
+  background-color: green;
+}
+
+.bg-medium {
+  background-color: yellow;
+  color: black;
+}
+
+.bg-high {
+  color: white;
+  background-color: orange;
+}
+
+.bg-veryhigh {
+  color: white;
+  background-color: red;
+}
+
+.bg-extreme {
+  color: white;
+  background-color: purple;
+}

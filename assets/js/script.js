@@ -22,7 +22,6 @@ var cityCurrent = function (cityLat, cityLon) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data.current);
           displayToday(data);
         });
       } else {
@@ -47,7 +46,6 @@ var fiveDay = function (cityLat, cityLon) {
   fetch(forecastDataURL).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        console.log(data.daily);
         displayForecast(data.daily);
       });
     } else {
@@ -67,6 +65,9 @@ var callCity = function (city) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
+          console.log(data);
+          var cityName = data.name;
+          $("#current-city").text(cityName);
           var cityLat = data.coord.lat;
           var cityLon = data.coord.lon;
           cityCurrent(cityLat, cityLon);
@@ -89,7 +90,23 @@ var displayToday = function (data) {
   var iconcode = data.current.weather[0].icon;
   var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
   $("#wicon").attr("src", iconurl);
-  $("#city-uv").text(data.current.uvi);
+
+  // UV Index Color Code
+  var UVIndex = data.current.uvi;
+  var indexEl = $("#city-uv");
+  $("#city-uv").text(UVIndex);
+  console.log(UVIndex);
+  if (UVIndex <= 2) {
+    indexEl.addClass("bg-low");
+  } else if (UVIndex <= 5 && UVIndex <= 2) {
+    indexEl.addClass("bg-medium");
+  } else if (UVIndex <= 7 && UVIndex <= 7) {
+    indexEl.addClass("bg-high");
+  } else if (UVIndex <= 10 && UVIndex <= 7) {
+    indexEl.addClass("bg-veryhigh");
+  } else if (UVIndex > 11 && UVIndex > 10) {
+    indexEl.addClass("bg-extreme");
+  }
 };
 
 // Display Forecast Info
@@ -159,12 +176,11 @@ $("#submit").on("click", function (event) {
 
   // capture submitted city input
   var submittedCity = cityInput.value.trim();
-  $("#current-city").text(submittedCity);
 
   // Add submitted city to History
   var historyLi = $("#history-list");
   var historyBtn = $("<button>")
-    .addClass("btn btn-secondary row col-12 m-2 text-center my-3")
+    .addClass("btn btn-history row col-12 m-2 text-center")
     .text(submittedCity);
 
   // check for valid city
@@ -177,7 +193,7 @@ $("#submit").on("click", function (event) {
   // Limit History List & Prevent Duplicates
   if (
     submittedCity &&
-    listLimit <= 5 &&
+    listLimit <= 10 &&
     alreadyAdded.includes(submittedCity) === false
   ) {
     listLimit++;
@@ -188,6 +204,8 @@ $("#submit").on("click", function (event) {
 
   // Clear input
   cityInput.value = "";
+
+  // Use Local storage to save searches
 });
 
 // Clicking city in search history displays the info for that city again
