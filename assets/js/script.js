@@ -204,8 +204,6 @@ $("#submit").on("click", function (event) {
 
   // Clear input
   cityInput.value = "";
-
-  // Use Local storage to save searches
 });
 
 // Clicking city in search history displays the info for that city again
